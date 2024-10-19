@@ -1,8 +1,8 @@
-package edu.iesam.pokemon.data.remote
+package edu.iesam.pokemon.features.data.remote
 
-import edu.iesam.pokemon.domain.Pokemon
-import edu.iesam.pokemon.domain.PokemonRepository
-import edu.iesam.pokemon.domain.Sprites
+import edu.iesam.pokemon.features.domain.Pokemon
+import edu.iesam.pokemon.features.domain.PokemonRepository
+import edu.iesam.pokemon.features.domain.Sprites
 
 class PokemonMockRemoteDataSource: PokemonRepository {
 
@@ -12,11 +12,11 @@ class PokemonMockRemoteDataSource: PokemonRepository {
         Pokemon("Bulbasaur", 1, 7, 69, Sprites("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"))
     )
 
-    override fun getPokemons(): List<Pokemon> {
+    suspend override fun getPokemons(): List<Pokemon> {
         return pokemons
     }
 
-    override fun getPokemonById(pokemonId: String): Pokemon? {
+    suspend override fun getPokemonById(pokemonId: String): Pokemon? {
         return pokemons.firstOrNull{ pokemon ->
             pokemon.name == pokemonId
         }

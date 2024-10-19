@@ -46,6 +46,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.gson.serializer)
+    implementation(libs.coil)
+    implementation(libs.viewmodel.scope)
+    implementation(libs.nav.ui)
+    implementation(libs.nav.fragment)
+    implementation(libs.nav.fragment.ktx)
     implementation(libs.retrofit)
     implementation(libs.retrofitConverterGson)
 

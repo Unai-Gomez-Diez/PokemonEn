@@ -1,7 +1,7 @@
-package edu.iesam.pokemon.domain
+package edu.iesam.pokemon.features.domain
 
 class GetPokemonsUseCase(private val pokemonRepository: PokemonRepository) {
-    fun execute(): List<Pokemon> {
+    suspend fun execute(): List<Pokemon> {
         return pokemonRepository.getPokemons()
     }
 }

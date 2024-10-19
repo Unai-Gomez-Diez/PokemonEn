@@ -1,8 +1,8 @@
-package edu.iesam.pokemon.data.local
+package edu.iesam.pokemon.features.data.local
 
 import android.content.Context
 import com.google.gson.Gson
-import edu.iesam.pokemon.domain.Pokemon
+import edu.iesam.pokemon.features.domain.Pokemon
 
 class PokemonXmlLocalDataSource(private val context: Context) {
 
