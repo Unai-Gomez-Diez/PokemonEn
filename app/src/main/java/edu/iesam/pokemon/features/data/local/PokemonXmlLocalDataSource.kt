@@ -32,6 +32,12 @@ class PokemonXmlLocalDataSource(private val context: Context) {
         editor.apply()
     }
 
+    fun findById(id: String): Pokemon? {
+        return sharedPref.getString(id, null).let {
+            gson.fromJson(it, Pokemon::class.java)
+        }
+    }
+
     fun findAll(): List<Pokemon> {
         val pokemons = ArrayList<Pokemon>()
         val mapPokemon = sharedPref.all

@@ -1,6 +1,6 @@
 package edu.iesam.pokemon.features.domain
 
 interface PokemonRepository {
-    suspend fun getPokemons(): List<Pokemon>
-    suspend fun getPokemonById(pokemonId: String): Pokemon?
+     fun getPokemons(): List<Pokemon>
+     fun getPokemonById(pokemonId: String): Pokemon?
 }

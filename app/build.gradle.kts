@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.navigation.safeargs.kotlin)
 }
 
 android {
     namespace = "edu.iesam.pokemon"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "edu.iesam.pokemon"
@@ -27,25 +28,31 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
 
+    //Libreias para la app
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.gson.serializer)
+    implementation(libs.glide)
     implementation(libs.coil)
     implementation(libs.viewmodel.scope)
     implementation(libs.nav.ui)
@@ -55,8 +62,12 @@ dependencies {
     implementation(libs.retrofitConverterGson)
 
 
+
+
+    //Librerias para testing
     testImplementation(libs.junit)
 
+    //Libreias para Android-Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
