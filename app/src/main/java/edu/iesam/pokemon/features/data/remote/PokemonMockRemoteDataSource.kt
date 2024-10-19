@@ -12,11 +12,11 @@ class PokemonMockRemoteDataSource: PokemonRepository {
         Pokemon("Bulbasaur", 1, 7, 69, Sprites("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"))
     )
 
-    suspend override fun getPokemons(): List<Pokemon> {
+     override fun getPokemons(): List<Pokemon> {
         return pokemons
     }
 
-    suspend override fun getPokemonById(pokemonId: String): Pokemon? {
+     override fun getPokemonById(pokemonId: String): Pokemon? {
         return pokemons.firstOrNull{ pokemon ->
             pokemon.name == pokemonId
         }
