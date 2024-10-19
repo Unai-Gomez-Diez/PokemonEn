@@ -1,4 +1,4 @@
-package edu.iesam.pokemon.presentation
+package edu.iesam.pokemon.features.presentation
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

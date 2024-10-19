@@ -1,4 +1,4 @@
-package edu.iesam.pokemon.domain
+package edu.iesam.pokemon.features.domain
 
 data class Pokemon(
     val name: String,
