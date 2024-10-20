@@ -39,7 +39,6 @@ class PokemonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pokemonFactory = PokemonFactory(requireContext())
         viewModel = pokemonFactory.buildViewModel()
-
         setupObserver()
         viewModel.viewCreated()
     }
@@ -49,7 +48,9 @@ class PokemonFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.apply {
             list.layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.VERTICAL, false
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
             )
             list.adapter = pokemonAdapter
         }

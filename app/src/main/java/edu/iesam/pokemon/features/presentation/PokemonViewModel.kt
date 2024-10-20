@@ -22,8 +22,7 @@ class PokemonViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             val pokemons = getPokemonsUseCase.invoke()
-            val orderList = pokemons.sortedWith(compareBy { it.id.toInt() })
-            _uiState.postValue(UiState(pokemon = orderList))
+            _uiState.postValue(UiState(pokemon = pokemons))
         }
     }
 
