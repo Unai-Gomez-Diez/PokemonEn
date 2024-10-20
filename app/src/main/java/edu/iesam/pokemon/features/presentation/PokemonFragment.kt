@@ -25,23 +25,26 @@ class PokemonFragment : Fragment() {
     private var _binding: FragmentPokemonBinding? = null
     private val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        pokemonFactory = PokemonFactory(requireContext())
-        viewModel = pokemonFactory.buildViewModel()
-        setupRecyclerView()
-        setupObserver()
-        viewModel.viewCreated()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPokemonBinding.inflate(inflater, container, false)
+        setupRecyclerView()
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        pokemonFactory = PokemonFactory(requireContext())
+        viewModel = pokemonFactory.buildViewModel()
+
+        setupObserver()
+        viewModel.viewCreated()
+    }
+
+
 
     private fun setupRecyclerView() {
         binding.apply {
