@@ -7,15 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.Companion
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import edu.iesam.pokemon.databinding.FragmentPokemonBinding
 import edu.iesam.pokemon.app.domain.ErrorApp
 import edu.iesam.pokemon.features.domain.Pokemon
 
-class PokemonFragment: Fragment() {
+class PokemonFragment : Fragment() {
 
     private lateinit var pokemonFactory: PokemonFactory
-    private lateinit var viewModel  : PokemonViewModel
+    private lateinit var viewModel: PokemonViewModel
+
+    private val pokemonAdapter = PokemonAdapter()
 
     private var _binding: FragmentPokemonBinding? = null
     private val binding get() = _binding!!
@@ -24,6 +29,7 @@ class PokemonFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pokemonFactory = PokemonFactory(requireContext())
         viewModel = pokemonFactory.buildViewModel()
+        setupRecyclerView()
         setupObserver()
         viewModel.viewCreated()
     }
@@ -37,47 +43,37 @@ class PokemonFragment: Fragment() {
         return binding.root
     }
 
+    private fun setupRecyclerView() {
+        binding.apply {
+            list.layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.VERTICAL, false
+            )
+            list.adapter = pokemonAdapter
+        }
+    }
+
     private fun setupObserver() {
-        val pokemonObserver = Observer<PokemonViewModel.UiState>{ state ->
-            state.pokemon?.let{
+        val pokemonObserver = Observer<PokemonViewModel.UiState> { state ->
+            state.pokemon?.let {
                 bindData(it)
             }
-            state.errorApp?.let{
+            state.errorApp?.let {
                 showError(it)
             }
-            if(state.isLoading){
+            if (state.isLoading) {
                 Log.d("@dev", "Cargando...")
             } else {
-                //oculto el cargando...
-                Log.d("@dev", " Cargado ...")
+                Log.d("@dev", "Cargado")
             }
         }
         viewModel.uiState.observe(viewLifecycleOwner, pokemonObserver)
     }
 
-    fun bindData(pokemons: List<Pokemon>) {
-        binding.apply {
-            id.text = pokemons[0].id
-            nombre.text = pokemons[0].name
-            id.setOnClickListener {
-                navigateToPokemonDetail(pokemons[0].id)
-            }
-            id2.text = pokemons[1].id
-            nombre2.text = pokemons[1].name
-            id2.setOnClickListener {
-                navigateToPokemonDetail(pokemons[1].id)
-            }
-
-            id3.text = pokemons[2].id
-            nombre3.text = pokemons[2].name
-            id3.setOnClickListener {
-                navigateToPokemonDetail(pokemons[2].id)
-            }
-        }
+    private fun bindData(pokemonList: List<Pokemon>) {
+        pokemonAdapter.submitList(pokemonList)
     }
 
-
-    private fun showError(error: ErrorApp){
+    private fun showError(error: ErrorApp) {
         when (error) {
             ErrorApp.DataErrorApp -> TODO()
             ErrorApp.InternetErrorApp -> TODO()
@@ -86,8 +82,7 @@ class PokemonFragment: Fragment() {
         }
     }
 
-
-    fun navigateToPokemonDetail(pokemonId: String) {
+    private fun navigateToPokemonDetail(pokemonId: String) {
         findNavController().navigate(
             PokemonFragmentDirections.actionFragmentPokemonToFragmentPokemonDetail(pokemonId)
         )
@@ -98,3 +93,4 @@ class PokemonFragment: Fragment() {
         _binding = null
     }
 }
+
