@@ -15,6 +15,7 @@ class PokemonDataRepository(
         val pokemonFromLocal = local.findAll()
         if (pokemonFromLocal.isEmpty()) {
             val pokemonFromRemote = mock.getPokemons()
+            local.saveAll(pokemonFromRemote)
             return pokemonFromRemote
         }else{
             return pokemonFromLocal
@@ -24,9 +25,9 @@ class PokemonDataRepository(
      override fun getPokemonById(pokemonId: String): Pokemon? {
         val localPokemon = local.findById(pokemonId)
         if (localPokemon == null) {
-            mock.getPokemonById(pokemonId)?.let {
-                local.save(it)
-                return it
+            mock.getPokemonById(pokemonId)?.let { pokemon ->
+                local.save(pokemon)
+                return pokemon
             }
         }
         return localPokemon

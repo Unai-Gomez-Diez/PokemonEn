@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import edu.iesam.pokemon.databinding.FragmentPokemonBinding
 import edu.iesam.pokemon.app.domain.ErrorApp
 import edu.iesam.pokemon.features.domain.Pokemon
@@ -23,7 +24,7 @@ class PokemonFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pokemonFactory = PokemonFactory(requireContext())
         viewModel = pokemonFactory.buildViewModel()
-        SetupObserver()
+        setupObserver()
         viewModel.viewCreated()
     }
 
@@ -36,7 +37,7 @@ class PokemonFragment: Fragment() {
         return binding.root
     }
 
-    private fun SetupObserver() {
+    private fun setupObserver() {
         val pokemonObserver = Observer<PokemonViewModel.UiState>{ state ->
             state.pokemon?.let{
                 bindData(it)
@@ -54,19 +55,27 @@ class PokemonFragment: Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner, pokemonObserver)
     }
 
-    private fun bindData(pokemons: List<Pokemon>) {
+    fun bindData(pokemons: List<Pokemon>) {
         binding.apply {
-            id.text = pokemons[0].id.toString()
+            id.text = pokemons[0].id
             nombre.text = pokemons[0].name
+            id.setOnClickListener {
+                navigateToPokemonDetail(pokemons[0].id)
+            }
+            id2.text = pokemons[1].id
+            nombre2.text = pokemons[1].name
+            id2.setOnClickListener {
+                navigateToPokemonDetail(pokemons[1].id)
+            }
 
-            id3.text = pokemons[0].id.toString()
-            nombre.text = pokemons[0].name
-
-            id3.text = pokemons[0].id.toString()
-            nombre3.text = pokemons[0].name
-
+            id3.text = pokemons[2].id
+            nombre3.text = pokemons[2].name
+            id3.setOnClickListener {
+                navigateToPokemonDetail(pokemons[2].id)
+            }
         }
     }
+
 
     private fun showError(error: ErrorApp){
         when (error) {
@@ -77,18 +86,14 @@ class PokemonFragment: Fragment() {
         }
     }
 
-    /*
+
     fun navigateToPokemonDetail(pokemonId: String) {
         findNavController().navigate(
-            PokemonFragmentDirections.actionMovieFragmentToMovieDetailFragment
-                (pokemonId)
-        )    }
-
-     */
-
+            PokemonFragmentDirections.actionFragmentPokemonToFragmentPokemonDetail(pokemonId)
+        )
+    }
 
     override fun onDestroyView() {
-        // Limpiar el enlace de vista cuando se destruye la vista
         super.onDestroyView()
         _binding = null
     }
