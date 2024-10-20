@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_pokemon">
 
     <fragment
         android:id="@+id/fragment_pokemon"
         android:name="edu.iesam.pokemon.features.presentation.PokemonFragment"
-        android:label="fragment_pokemon" />
+        tools:layout="@layout/fragment_pokemon">
+
+            <action
+                android:id="@+id/action_fragment_pokemon_to_fragment_pokemon_detail"
+                app:destination="@id/fragment_pokemon_detail" />
+    </fragment>
+
+
+    <fragment
+    android:id="@+id/fragment_pokemon_detail"
+    android:name="edu.iesam.pokemon.features.presentation.PokemonDetailFragment"
+    tools:layout="@layout/fragment_pokemon_detail">
+
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="false"
+            />
+
+        <action
+            android:id="@+id/action_fragment_pokemon_detail_to_fragment_pokemon"
+            app:destination="@id/fragment_pokemon" />
+    </fragment>
+
 </navigation>

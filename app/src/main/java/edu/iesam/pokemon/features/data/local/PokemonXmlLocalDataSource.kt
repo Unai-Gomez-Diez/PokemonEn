@@ -41,8 +41,9 @@ class PokemonXmlLocalDataSource(private val context: Context) {
     fun findAll(): List<Pokemon> {
         val pokemons = ArrayList<Pokemon>()
         val mapPokemon = sharedPref.all
-        mapPokemon.forEach {
-            pokemons.add(gson.fromJson(it.value as String, Pokemon::class.java))
+        mapPokemon.forEach { jsonPokemon ->
+            val pokemon = gson.fromJson(jsonPokemon.value as String, Pokemon::class.java)
+            pokemons.add(pokemon)
         }
         return pokemons
     }
